@@ -1,5 +1,5 @@
 # GoDownloadThat
-A Powerful and Easy to use File Downloader written in Go
+A powerful and easy to use **file downloader** written in Go
 
 ## Installation
 `$ go get github.com/abrad1212/godownloadthat`

@@ -1,26 +1,18 @@
 package godownloadthat
 
 import (
+	"fmt"
 	"bytes"
 	"errors"
 	"io"
 	"os"
 	"strconv"
+	"time"
 
 	"net/http"
 
 	"github.com/valyala/fasthttp"
 )
-
-func main() {
-	urls := [2]string{
-		"https://golangcode.com/images/avatar.jpg",
-		"https://blog.hubspot.com/hubfs/image8-2.jpg",
-	}
-
-	//runSingle(urls[:])
-	RunMultiNative(urls[:])
-}
 
 // RunMultiNative - Downloads the contents of the specified urls,
 // using GoLang's builtin HTTP library.
