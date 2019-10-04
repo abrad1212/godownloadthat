@@ -11,7 +11,8 @@ import (
 
 	"net/http"
 
-	"github.com/valyala/fasthttp"
+    "github.com/valyala/fasthttp"
+    "github.com/h2non/filetype"
 )
 
 // RunMultiNative - Downloads the contents of the specified urls,
@@ -127,6 +128,13 @@ func downloadFileHelperFast(filepath string, url string) ([]byte, error) {
 	//size := int64(binary.Size(body))
 	//fmt.Printf("File Size: %s \n", byteCountSI(size))
 
+    contentType, err := filetype.Get(body)
+    if err != nil {
+        // Return if the MIME Type couldn't be determined
+        return nil, err
+    }
+    fmt.Printf("MimeType: %s", contentType)
+
 	out, err := os.Create(filepath)
 	if err != nil {
 		return nil, err
@@ -153,6 +161,9 @@ func byteCountSI(b int64) string {
 		float64(b)/float64(div), "kMGTPE"[exp])
 }
 
+// Utility function to measure execution time
+// of a function
+//  defer elapsed("Function Name")()
 func elapsed(what string) func() {
 	start := time.Now()
 	return func() {
