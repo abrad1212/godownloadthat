@@ -1,7 +1,6 @@
 package godownloadthat
 
 import (
-	"bufio"
 	"bytes"
 	"errors"
 	"fmt"
@@ -152,21 +151,9 @@ func downloadFileHelperFast(filepath string, url string, conf *Config) ([]byte, 
 		return nil, err
 	}
 
-	/*var data bytes.Buffer
-	r := bytes.NewReader(body)
-
-	_, err = io.Copy(out, r)
-	return data.Bytes(), nil*/
-
-	w := bufio.NewWriter(out)
-	fmt.Fprint(w, body)
-
-	err = w.Flush()
-	if err != nil {
-		return nil, err
-	}
-
 	var data bytes.Buffer
+	r := bytes.NewReader(body)
+	_, err = io.Copy(out, r)
 
 	return data.Bytes(), nil
 }
