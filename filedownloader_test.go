@@ -2,6 +2,7 @@ package godownloadthat_test
 
 import (
 	"testing"
+	"os"
 
 	"github.com/abrad1212/godownloadthat"
 )
@@ -26,10 +27,26 @@ func BenchmarkDownloadFiles(b *testing.B) {
 	}
 }
 
+func TestMain(m *testing.M) {
+	// Setup
+
+	// Run Test
+	code := m.Run()
+
+	// Teardown
+	os.Remove("google.png")
+	os.Remove("chrome.png")
+
+	// Exit
+	os.Exit(code)
+}
+
 func TestDownloadFiles(t *testing.T) {
-	// Placeholder
 	t.Run("Main", func(t *testing.T) {
-		downloader := godownloadthat.Downloader{}
+		t.Parallel()
+		downloader := godownloadthat.Downloader{
+			Debug: true,
+		}
 
 		t.Run("1 URL", func(t *testing.T) {
 			url := []string{
@@ -37,6 +54,22 @@ func TestDownloadFiles(t *testing.T) {
 			}
 			fileName := []string{
 				"google.png",
+			}
+			err := downloader.DownloadFiles(url, fileName)
+
+			if err != nil {
+				t.Error(err)
+			}
+		})
+
+		t.Run("2 URLs", func(t *testing.T) {
+			url := []string{
+				"http://pluspng.com/img-png/google-logo-png-open-2000.png",
+				"https://img.icons8.com/cotton/512/000000/chrome.png",
+			}
+			fileName := []string{
+				"google.png",
+				"chrome.png",
 			}
 			err := downloader.DownloadFiles(url, fileName)
 

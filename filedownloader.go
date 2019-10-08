@@ -3,7 +3,7 @@ package godownloadthat
 import (
 	"bytes"
 	"errors"
-	//"fmt"
+	"fmt"
 	"io"
 	"os"
 
@@ -20,7 +20,7 @@ type Downloader struct {
 // DownloadFiles provides a way to download files from
 // urls and save them with the specified fileNames
 //
-// Downloads concurrently using GoRoutine
+// Downloads concurrently using GoRoutines
 func (d *Downloader) DownloadFiles(urls []string, fileNames []string) error {
 	if len(urls) != len(fileNames) {
 		return errors.New("The length of URLs doesn't match the length of filenames")
@@ -39,7 +39,6 @@ func (d *Downloader) DownloadFiles(urls []string, fileNames []string) error {
 			}
 			done <- result
 			errch <- err
-
 		}(url, fileNames[c])
 	}
 
@@ -59,7 +58,14 @@ func (d *Downloader) DownloadFiles(urls []string, fileNames []string) error {
 	return err
 }
 
+// Helper function for concurrently downloading files
 func (d *Downloader) downloadFile(url string, fileName string) ([]byte, error) {
+	if d.Debug == true {
+		defer func() {
+			fmt.Printf("[Download Complete]: URL: %s, File: %s \n", url, fileName)
+		}()
+	}
+
 	statusCode, body, err := d.Client.Get(nil, url)
 	if err != nil {
 		return nil, err
