@@ -11,12 +11,21 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
+// Downloader implements a downloading client
 type Downloader struct {
 	Client fasthttp.Client
 	Debug bool
 }
 
-func (d *Downloader) DownloadFiles(urls []string, fileNames []string) {
+// DownloadFiles provides a way to download files from
+// urls and save them with the specified fileNames
+//
+// Downloads concurrently using GoRoutine
+func (d *Downloader) DownloadFiles(urls []string, fileNames []string) error {
+	if len(urls) != len(fileNames) {
+		return errors.New("The length of URLs doesn't match the length of filenames")
+	}
+
 	done := make(chan []byte, len(urls))
 	errch := make(chan error, len(urls))
 
@@ -33,6 +42,21 @@ func (d *Downloader) DownloadFiles(urls []string, fileNames []string) {
 
 		}(url, fileNames[c])
 	}
+
+	var errStr string
+
+	for i := 0; i < len(urls); i++ {
+		if err := <- errch; err != nil {
+			errStr = errStr + " " + err.Error()
+		}
+	}
+
+	var err error
+	if errStr != "" {
+		err = errors.New(errStr)
+	}
+
+	return err
 }
 
 func (d *Downloader) downloadFile(url string, fileName string) ([]byte, error) {

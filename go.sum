@@ -4,6 +4,8 @@ github.com/TrueFurby/go-callvis v0.5.0 h1:G8jZY7VpvUxVgCaL5JbORvN9I2DAsZmcjrhm4b
 github.com/TrueFurby/go-callvis v0.5.0/go.mod h1:pfgf1uM6TTFZd68pcT2AkejZeaOZWZS8enaj8NQ/fa8=
 github.com/aclements/go-gg v0.0.0-20170118225347-6dbb4e4fefb0/go.mod h1:55qNq4vcpkIuHowELi5C8e+1yUHtoLoOUR9QU5j7Tes=
 github.com/aclements/go-moremath v0.0.0-20161014184102-0ff62e0875ff/go.mod h1:idZL3yvz4kzx1dsBOAC+oYv6L92P1oFEhUXUB1A/lwQ=
+github.com/arekkas/accurate-test-coverage v0.0.0-20170711090600-2fcab3a8a34f h1:Bw6161suwZ+sJinpFiNHZaLyIIm6UCJUzmpaWfmRJFg=
+github.com/arekkas/accurate-test-coverage v0.0.0-20170711090600-2fcab3a8a34f/go.mod h1:N/gTHE37q8iZXKKw4BVnTg50NQchzn4buNM8s1BzhCI=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/go-sql-driver/mysql v1.4.1/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
