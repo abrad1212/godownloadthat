@@ -16,9 +16,6 @@ func main() {
 		"safari.png",
 	}
 
-	conf := &godownloadthat.Config{
-		Debug: true,
-	}
-
-	godownloadthat.RunMultiFast(urls, fileNames, conf)
+	downloader := godownloadthat.Downloader{}
+	downloader.DownloadFiles(urls, fileNames)
 }

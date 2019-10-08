@@ -17,12 +17,12 @@ func BenchmarkRunMultiFast(b *testing.B) {
 		"safari.png",
 	}
 
-	conf := &godownloadthat.Config{
+	downloader := godownloadthat.Downloader{
 		Debug: false,
 	}
 
 	for n := 0; n < b.N; n++ {
-		godownloadthat.RunMultiFast(urls, fileNames, conf)
+		downloader.DownloadFiles(urls, fileNames)
 	}
 }
 
