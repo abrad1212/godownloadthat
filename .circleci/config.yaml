@@ -1,12 +1,95 @@
-machine:
-  environment:
-    IMPORT_PATH: "github.com/abrad1212/godownloadthat"
+version: 2.0
 
-dependencies:
-  override:
-    - mkdir -p "$GOPATH/src/$IMPORT_PATH"
-    - rsync -azC --delete ./ "$GOPATH/src/$IMPORT_PATH/"
+jobs:
+  # Base test configuration for Go library tests Each distinct version should
+  # inherit this base, and override (at least) the container image used.
+  "test": &test
+    docker:
+      - image: circleci/golang:latest
+    working_directory: /go/src/github.com/abrad1212/godownloadthat
+    steps: &steps
+      # Our build steps: we checkout the repo, fetch our deps, lint, and finally
+      # run "go test" on the package.
+      - checkout
+      # Logs the version in our build logs, for posterity
+      - run: go version
+      - run:
+          name: "Fetch dependencies"
+          command: >
+            go get -t -v ./...
+      # Only run gofmt, vet & lint against the latest Go version
+      - run:
+          name: "Run golint"
+          command: >
+            if [ "${LATEST}" = true ] && [ -z "${SKIP_GOLINT}" ]; then
+              go get -u golang.org/x/lint/golint
+              golint ./...
+            fi
+      - run:
+          name: "Run gofmt"
+          command: >
+            if [[ "${LATEST}" = true ]]; then
+              diff -u <(echo -n) <(gofmt -d -e .)
+            fi
+      - run:
+          name: "Run go vet"
+          command:  >
+            if [[ "${LATEST}" = true ]]; then
+              go vet -v ./...
+            fi
+      - run: go test -v -race ./...
 
-test:
-  pre:
-    - go vet ./...
+  "latest":
+    <<: *test
+    environment:
+      LATEST: true
+
+  "1.12":
+    # This is the neat trick: the <<: *test references the, well, &test reference
+    # we created above. If we want to override any sub-object, we just need to supply
+    # that object, and not copy+paste the entire object (at risk of typo, or misconfig)
+    <<: *test
+    docker:
+      - image: circleci/golang:1.12
+
+  "1.11":
+    <<: *test
+    docker:
+      # Version tags here fetch the latest Go patch release by default
+      # e.g. "golang:1.11" fetches 1.11.11 automatically.
+      - image: circleci/golang:1.11
+
+  "1.10":
+    <<: *test
+    docker:
+      - image: circleci/golang:1.10
+
+  "1.9":
+    <<: *test
+    docker:
+      - image: circleci/golang:1.9
+
+  "1.8":
+    <<: *test
+    docker:
+      - image: circleci/golang:1.8
+
+  "1.7":
+    <<: *test
+    docker:
+      - image: circleci/golang:1.7
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      # Self-explanatory: we run all of our builds. We could potentially
+      # add a "requires: latest" to the specific version tags, if we wanted to
+      # attempt to build latest first (only).
+      - "latest"
+      - "1.12"
+      - "1.11"
+      - "1.10"
+      - "1.9"
+      - "1.8"
+      - "1.7"
