@@ -50,9 +50,9 @@ jobs:
           name: "Run go test"
           command: >
             go test -coverprofile=c.out -v -race ./...
-            go tool cover -html=c.out -o coverage.html
+            go tool cover -html=c.out -o coverage_report.html
       - codecov/upload:
-          file: coverage.html
+          file: coverage_report.html
 
 workflows:
   main:
