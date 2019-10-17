@@ -1,4 +1,6 @@
-version: 2.0
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.2
 
 jobs:
   # Base test configuration for Go library tests Each distinct version should
@@ -37,7 +39,13 @@ jobs:
             if [[ "${LATEST}" = true ]]; then
               go vet -v ./...
             fi
-      - run: go test -v -race ./...
+      - run:
+          name: "Run go test"
+          command: >
+            go test -coverprofile=c.out -v -race ./...
+            go tool cover -html=c.out -o coverage.html
+      - codecov/upload:
+          file: coverage.html
 
   "latest":
     <<: *test
