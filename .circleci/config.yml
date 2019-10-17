@@ -54,6 +54,9 @@ jobs:
             else
               go test -v -race ./...
             fi
+      - codecov/upload:
+        file: coverage_report.html
+        when: << parameters.latest >>
 
 workflows:
   main:
