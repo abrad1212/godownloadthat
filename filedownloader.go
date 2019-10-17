@@ -83,5 +83,9 @@ func (d *Downloader) downloadFile(url string, fileName string) ([]byte, error) {
 	r := bytes.NewReader(body)
 	_, err = io.Copy(out, r)
 
+	if err != nil {
+		return nil, err
+	}
+
 	return data.Bytes(), nil
 }
