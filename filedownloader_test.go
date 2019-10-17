@@ -1,8 +1,8 @@
 package godownloadthat_test
 
 import (
-	"testing"
 	"os"
+	"testing"
 
 	"github.com/abrad1212/godownloadthat"
 )

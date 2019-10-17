@@ -5,8 +5,8 @@ go 1.12
 require (
 	github.com/TrueFurby/go-callvis v0.5.0 // indirect
 	github.com/arekkas/accurate-test-coverage v0.0.0-20170711090600-2fcab3a8a34f // indirect
-	github.com/h2non/filetype v1.0.10
-	github.com/stretchr/testify v1.4.0
+	github.com/h2non/filetype v1.0.10 // indirect
+	github.com/stretchr/testify v1.4.0 // indirect
 	github.com/valyala/fasthttp v1.5.0
 	golang.org/x/crypto v0.0.0-20191002192127-34f69633bfdc // indirect
 	golang.org/x/net v0.0.0-20191003171128-d98b1b443823 // indirect

@@ -14,7 +14,7 @@ import (
 // Downloader implements a downloading client
 type Downloader struct {
 	Client fasthttp.Client
-	Debug bool
+	Debug  bool
 }
 
 // DownloadFiles provides a way to download files from
@@ -45,7 +45,7 @@ func (d *Downloader) DownloadFiles(urls []string, fileNames []string) error {
 	var errStr string
 
 	for i := 0; i < len(urls); i++ {
-		if err := <- errch; err != nil {
+		if err := <-errch; err != nil {
 			errStr = errStr + " " + err.Error()
 		}
 	}
