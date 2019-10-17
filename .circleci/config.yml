@@ -49,14 +49,7 @@ jobs:
       - run:
           name: "Run go test"
           command: >
-            if [[ "${LATEST}" = true ]]; then
-              go test -coverprofile=c.out -v -race ./... && go tool cover -html=c.out -o coverage_report.html
-            else
-              go test -v -race ./...
-            fi
-      - codecov/upload:
-        file: coverage_report.html
-        when: << parameters.latest >>
+            go test -v -race ./...
 
 workflows:
   main:
