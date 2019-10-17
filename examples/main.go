@@ -9,7 +9,6 @@ func main() {
 	urls := []string{
 		"https://img.icons8.com/cotton/512/000000/chrome.png",
 		"https://img.icons8.com/cotton/512/000000/safari.png",
-
 	}
 
 	fileNames := []string{

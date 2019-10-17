@@ -1,4 +1,4 @@
-# GoDownloadThat
+# GoDownloadThat [![CircleCI](https://circleci.com/gh/abrad1212/godownloadthat.svg?style=svg)](https://circleci.com/gh/abrad1212/godownloadthat)
 A powerful and easy to use **file downloader** written in Go
 
 ## Installation
