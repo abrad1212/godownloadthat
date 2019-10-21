@@ -7,8 +7,8 @@ import (
 	"io"
 	"os"
 
-	//"github.com/h2non/filetype"
 	"github.com/valyala/fasthttp"
+	"github.com/schollz/progressbar/v2"
 )
 
 // Downloader implements a downloading client
@@ -74,14 +74,24 @@ func (d *Downloader) downloadFile(url string, fileName string) ([]byte, error) {
 		return nil, errors.New("URL did not return 200")
 	}
 
-	out, err := os.Create(fileName)
+	var out io.Writer;
+	f, err := os.Create(fileName)
 	if err != nil {
 		return nil, err
 	}
 
+	bar := progressbar.NewOptions(
+		int(len(body)),
+		progressbar.OptionSetBytes(int(len(body))),
+
+	)
+	out = io.MultiWriter(f, bar)
+
 	var data bytes.Buffer
 	r := bytes.NewReader(body)
+
 	_, err = io.Copy(out, r)
+	print("\n")
 
 	if err != nil {
 		return nil, err
