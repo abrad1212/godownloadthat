@@ -7,3 +7,8 @@ A powerful and easy to use **file downloader** written in Go
 
 ## Example
 [See here](https://github.com/abrad1212/godownloadthat/tree/master/examples)
+
+## Features
+- [x] Simple to use
+- [ ] File checksums
+- [ ] Resuming downloads
